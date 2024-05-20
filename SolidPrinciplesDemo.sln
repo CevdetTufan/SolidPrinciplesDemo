@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolidPrinciplesDemoSrp", "S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolidPrinciplesDemoOcp", "SolidPrinciplesDemoOcp\SolidPrinciplesDemoOcp.csproj", "{24E62E3A-FCDA-4325-BE9B-7819DB8D65B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidPrinciplesDemoLcp", "SolidPrinciplesDemoLcp\SolidPrinciplesDemoLcp.csproj", "{C8428D73-C92E-4DEA-9E65-D2558309386B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolidPrinciplesDemoLsp", "SolidPrinciplesDemoLcp\SolidPrinciplesDemoLsp.csproj", "{C8428D73-C92E-4DEA-9E65-D2558309386B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
