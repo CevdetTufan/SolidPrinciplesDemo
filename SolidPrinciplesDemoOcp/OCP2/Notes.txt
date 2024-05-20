@@ -1,0 +1,11 @@
+﻿ChatGPT:
+
+Let's consider another example related to sorting algorithms. Suppose we have a requirement to sort an array of integers using different sorting algorithms, such as bubble sort and quick sort. We want to be able to add new sorting algorithms without modifying the existing code.
+
+In this example:
+
+We have an interface ISortAlgorithm representing a sorting algorithm, which defines a method Sort() to sort an array of integers.
+BubbleSort and QuickSort are concrete implementations of ISortAlgorithm, each providing its own implementation of the Sort() method.
+The Sorter class takes an object that implements ISortAlgorithm and sorts an array using the specified sorting algorithm.
+Now, if we need to add support for another sorting algorithm, such as merge sort or insertion sort, we can simply create a new class that implements ISortAlgorithm without modifying the existing code. This demonstrates adherence to the Open/Closed Principle.
+

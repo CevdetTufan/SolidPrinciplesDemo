@@ -1,0 +1,14 @@
+﻿ChatGPT
+
+Let's consider an example of the Open/Closed Principle (OCP) in C# by extending our previous example of the repository pattern for products. We'll introduce a new requirement: the ability to filter products based on certain criteria without modifying the existing code.
+
+In this example:
+
+We extended the InMemoryProductRepository class to include a new method GetByCategory() to filter products by category.
+We extended the ProductService class to include a new method DisplayProductsByCategory() to display products filtered by category.
+These extensions were made without modifying the existing code, adhering to the Open/Closed Principle. Now, the system can be extended to support new filtering criteria without changing the existing behavior.
+
+I've added a GetByCategory method to the IProductRepository interface to retrieve products by category.
+The InMemoryProductRepository class implements this method to filter products by category.
+The ProductService class now utilizes the GetByCategory method to display products by category.
+Now, the ProductService is utilizing the GetByCategory method provided by the IProductRepository interface, allowing it to display products by category without direct access to the repository's implementation details. This adheres to the Open/Closed Principle by allowing the ProductService to be extended with new functionality (such as category-based filtering) without modifying its existing code.

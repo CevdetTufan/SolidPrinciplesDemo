@@ -1,0 +1,59 @@
+﻿Subtypes must be substitutable for their base types.
+
+In simpler terms, the Liskov Substitution Principle suggests that objects of a superclass should be replaceable with objects of its subclasses without affecting the correctness of the program.
+
+Violating the Liskov Substitution Principle can lead to unexpected behavior and errors in the code.
+
+Violating LSP Example
+
+A classic real-life example of a violation of the Liskov Substitution Principle (LSP) can be found in the design of certain vehicle classes in an object-oriented system. Let's consider a simplified example where we have a base class Vehicle and two subclasses Car and Bicycle.
+
+using System;
+
+class Vehicle
+{
+    public virtual void StartEngine()
+    {
+        Console.WriteLine("Engine started...");
+    }
+}
+
+class Car : Vehicle
+{
+    public override void StartEngine()
+    {
+        Console.WriteLine("Car engine started...");
+    }
+
+    public void Drive()
+    {
+        Console.WriteLine("Car is being driven...");
+    }
+}
+
+class Bicycle : Vehicle
+{
+    public override void StartEngine()
+    {
+        throw new NotSupportedException("Bicycles do not have engines."); // Violates LSP
+    }
+
+    public void Pedal()
+    {
+        Console.WriteLine("Bicycle is being pedaled...");
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Vehicle car = new Car();
+        car.StartEngine(); // Output: Car engine started...
+        //car.Drive(); // This will not compile, showing a limitation when treating car as a Vehicle
+
+        Vehicle bicycle = new Bicycle();
+        bicycle.StartEngine(); // Throws NotSupportedException, violating LSP
+        //bicycle.Pedal(); // This will not compile, showing a limitation when treating bicycle as a Vehicle
+    }
+}

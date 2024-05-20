@@ -1,0 +1,64 @@
+﻿
+According to the Open/Closed Principle (OCP), a method's behavior should be closed for modification but open for extension. This means that once a method is implemented, it should not be modified to accommodate new requirements or changes in behavior. Instead, the method should be designed in a way that allows for its behavior to be extended or customized without altering its existing implementation.
+
+In other words, while the internal logic of a method may remain unchanged, the method should be designed to accept new behavior or functionality through inheritance, composition, or other means, without requiring modifications to its source code.
+
+For example, if we have a method that calculates the area of a shape:
+
+public double CalculateArea(Shape shape)
+{
+    // Calculate area based on the type of shape
+    if (shape is Rectangle)
+    {
+        Rectangle rectangle = (Rectangle)shape;
+        return rectangle.Width * rectangle.Height;
+    }
+    else if (shape is Circle)
+    {
+        Circle circle = (Circle)shape;
+        return Math.PI * Math.Pow(circle.Radius, 2);
+    }
+    // Handle other shape types...
+}
+
+This method can be considered to violate the Open/Closed Principle because it needs to be modified whenever a new shape type is introduced. Instead, we can refactor it to adhere to OCP by using polymorphism:
+
+public abstract class Shape
+{
+    public abstract double Area();
+}
+
+public class Rectangle : Shape
+{
+    public double Width { get; set; }
+    public double Height { get; set; }
+
+    public override double Area()
+    {
+        return Width * Height;
+    }
+}
+
+public class Circle : Shape
+{
+    public double Radius { get; set; }
+
+    public override double Area()
+    {
+        return Math.PI * Math.Pow(Radius, 2);
+    }
+}
+
+// Client code
+public double CalculateTotalArea(IEnumerable<Shape> shapes)
+{
+    double totalArea = 0;
+    foreach (var shape in shapes)
+    {
+        totalArea += shape.Area();
+    }
+    return totalArea;
+}
+
+
+Now, if we introduce a new shape type (e.g., Triangle), we can simply create a new class that inherits from Shape and implements its Area method, without needing to modify the CalculateTotalArea method. This adheres to the Open/Closed Principle, as the behavior of CalculateTotalArea is closed for modification but open for extension.
