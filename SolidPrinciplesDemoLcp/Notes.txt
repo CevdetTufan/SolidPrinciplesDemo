@@ -1,46 +1,94 @@
-﻿Subtypes must be substitutable for their base types.
+﻿The Liskov Substitution Principle (LSP) is one of the SOLID principles of object-oriented programming. It states that objects of a superclass should be replaceable with objects of a subclass without affecting the correctness of the program. Essentially, a subclass should override the parent class methods in a way that does not break the functionality from a client's point of view.
 
-In simpler terms, the Liskov Substitution Principle suggests that objects of a superclass should be replaceable with objects of its subclasses without affecting the correctness of the program.
+Here's a real-world example in C# to illustrate this principle.
 
-Violating the Liskov Substitution Principle can lead to unexpected behavior and errors in the code.
+Let's start with a base class Bird and then create a couple of subclasses Eagle and Penguin. According to LSP, you should be able to substitute Bird with either Eagle or Penguin without altering the correctness of your program.
 
-Violating LSP Example
 
-A classic real-life example of a violation of the Liskov Substitution Principle (LSP) can be found in the design of certain vehicle classes in an object-oriented system. Let's consider a simplified example where we have a base class Vehicle and two subclasses Car and Bicycle.
+Base Class: Bird
 
-using System;
-
-class Vehicle
+public abstract class Bird
 {
-    public virtual void StartEngine()
+    public abstract void Fly();
+}
+
+Subclass: Eagle
+
+public class Eagle : Bird
+{
+    public override void Fly()
     {
-        Console.WriteLine("Engine started...");
+        Console.WriteLine("Eagle is flying high.");
     }
 }
 
-class Car : Vehicle
-{
-    public override void StartEngine()
-    {
-        Console.WriteLine("Car engine started...");
-    }
+Subclass: Penguin
 
-    public void Drive()
+public class Penguin : Bird
+{
+    // Penguins cannot fly, so implementing Fly in the same way as Eagle would violate LSP.
+    public override void Fly()
     {
-        Console.WriteLine("Car is being driven...");
+        throw new NotImplementedException("Penguins cannot fly.");
     }
 }
+In the above setup, if a Penguin is substituted for a Bird, it would break the application because calling Fly would throw an exception. This violates the Liskov Substitution Principle.
 
-class Bicycle : Vehicle
+Corrected Example:
+To adhere to LSP, we need to rethink our design. We can introduce a separate interface for flying birds.
+
+Interface: IFlyingBird
+
+public interface IFlyingBird
 {
-    public override void StartEngine()
+    void Fly();
+}
+
+Base Class: Bird
+
+public abstract class Bird
+{
+    public abstract void Eat();
+}
+Subclass: Eagle
+
+public class Eagle : Bird, IFlyingBird
+{
+    public override void Eat()
     {
-        throw new NotSupportedException("Bicycles do not have engines."); // Violates LSP
+        Console.WriteLine("Eagle is eating.");
     }
 
-    public void Pedal()
+    public void Fly()
     {
-        Console.WriteLine("Bicycle is being pedaled...");
+        Console.WriteLine("Eagle is flying high.");
+    }
+}
+Subclass: Penguin
+
+public class Penguin : Bird
+{
+    public override void Eat()
+    {
+        Console.WriteLine("Penguin is eating.");
+    }
+
+    // Penguins do not implement IFlyingBird, as they cannot fly.
+}
+Client Code
+Now, let's see the client code that respects LSP.
+
+
+public class BirdWatcher
+{
+    public void ObserveBird(Bird bird)
+    {
+        bird.Eat();
+    }
+
+    public void ObserveFlyingBird(IFlyingBird flyingBird)
+    {
+        flyingBird.Fly();
     }
 }
 
@@ -48,12 +96,24 @@ class Program
 {
     static void Main(string[] args)
     {
-        Vehicle car = new Car();
-        car.StartEngine(); // Output: Car engine started...
-        //car.Drive(); // This will not compile, showing a limitation when treating car as a Vehicle
+        BirdWatcher watcher = new BirdWatcher();
 
-        Vehicle bicycle = new Bicycle();
-        bicycle.StartEngine(); // Throws NotSupportedException, violating LSP
-        //bicycle.Pedal(); // This will not compile, showing a limitation when treating bicycle as a Vehicle
+        Bird eagle = new Eagle();
+        Bird penguin = new Penguin();
+
+        watcher.ObserveBird(eagle);    // Output: Eagle is eating.
+        watcher.ObserveBird(penguin);  // Output: Penguin is eating.
+
+        IFlyingBird flyingEagle = new Eagle();
+        watcher.ObserveFlyingBird(flyingEagle);  // Output: Eagle is flying high.
+        
+        // watcher.ObserveFlyingBird(penguin);  // This will not compile, preserving LSP
     }
 }
+In this revised design:
+
+Bird class has only methods common to all birds.
+IFlyingBird interface is implemented by birds that can fly.
+The client code (e.g., BirdWatcher) treats Eagle and Penguin appropriately based on their abilities.
+By ensuring that Penguin does not have a Fly method and instead focusing on what each subclass can do correctly, we adhere to the Liskov Substitution Principle.
+
