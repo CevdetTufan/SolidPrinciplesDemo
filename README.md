@@ -20,3 +20,9 @@ In the SolidPrinciplesDemoOcp, there is a ProductService class, an InMemoryProdu
 We extended the InMemoryProductRepository class to include a new method GetByCategory() to filter products by category.
 We extended the ProductService class to include a new method DisplayProductsByCategory() to display products filtered by category.
 These extensions were made without modifying the existing code, adhering to the Open/Closed Principle. Now, the system can be extended to support new filtering criteria without changing the existing behavior.
+
+Liskov Substitution Principle
+
+Subclasses should be substitutable base classes. The base class defines a contract, including methods and behaviors, that its subclasses are expected to adhere to.
+In the SolidPrinciplesDemoLsp example, there is a Payment base class and the subclasses BitcoinPayment, CashPayment, CreditCardPayment, and PayPalPayment. These classes are subclasses of the Payment base class and implement the behavior to process payments. However, CashPayment does not fully adhere to the base class behavior because it throws an exception if the amount is greater than $1000, as shown in the commented code.  This is a violation of LSP.
+CashPayment extends with the IPaymentValidator interface and the ValidatePayment method validates the amount. In the PaymentProcessor class, payment validates and CashPayment adheres to its base class behaviour.
