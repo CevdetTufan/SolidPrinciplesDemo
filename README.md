@@ -35,3 +35,10 @@ The IPrint interface is separated into three distinct interfaces: IPrinterIsp, I
 The IPrinterIsp, IScannerIsp, and IFaxIsp interfaces are implemented to the MultifunctionPrinter class, which includes the methods it needs.
 Thus, the client isn’t forced to implement methods it doesn’t need.
 
+Dependency Inversion Principle
+
+High-level modules should not depend on low-level modules. Both should depend on abstractions. 
+In the SolidPrinciplesDemoDip example, the PaymentProcessorViolated class depends the CreditCardPayment class and the PayPalPayment class. The PaymentProcessorViolated is tightly coupled to the specific payment method classes, CreditCardPayment and PayPalPayment, which violates the Dependency Inversion Principle.
+The PaymentProcessor class depends the IPayment interface which adhere DIP and high level class is low-coupled to low-level class.
+
+
